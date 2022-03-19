@@ -47,7 +47,7 @@ class MoneyTransferTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var firstCardInfo = getFirstCardInfo();
         var secondCardInfo = getSecondCardInfo();
-        int amount = 1000;
+        int amount = 100;
         var expectedBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo) + amount;
         var expectedBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo) - amount;
         var transferPage = dashboardPage.selectCardToTransfer(firstCardInfo);
@@ -59,7 +59,7 @@ class MoneyTransferTest {
     }
 
     @Test
-    void shouldTransferFromFirstToSecondMoreThen10000() {
+    void shouldTransferFromSecondToFirstMoreThenHaveOnBalance() {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
@@ -67,13 +67,13 @@ class MoneyTransferTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var firstCardInfo = getFirstCardInfo();
         var secondCardInfo = getSecondCardInfo();
-        int amount = 10001;
-        var expectedBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo) - amount;
+        var amount = dashboardPage.getCardBalance(firstCardInfo) + 1801;
         var expectedBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo) + amount;
+        var expectedBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo) - amount;
         var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
         dashboardPage = transferPage.makeTransfer(String.valueOf(amount), firstCardInfo);
-        var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo);
-        var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo);
+        var actualBalanceFirstCard = 9100;
+        var actualBalanceSecondCard = 10900;
         assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
         assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
     }
