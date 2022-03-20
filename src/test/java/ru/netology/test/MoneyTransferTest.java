@@ -31,7 +31,7 @@ class MoneyTransferTest {
         var expectedBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo) - amount;
         var expectedBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo) + amount;
         var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
-        dashboardPage = transferPage.makeTransfer(String.valueOf(amount), firstCardInfo);
+        dashboardPage = transferPage.makeTransfer(Integer.parseInt(String.valueOf(amount)), firstCardInfo);
         var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo);
         var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo);
         assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
@@ -51,7 +51,7 @@ class MoneyTransferTest {
         var expectedBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo) + amount;
         var expectedBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo) - amount;
         var transferPage = dashboardPage.selectCardToTransfer(firstCardInfo);
-        dashboardPage = transferPage.makeTransfer(String.valueOf(amount), secondCardInfo);
+        dashboardPage = transferPage.makeTransfer(Integer.parseInt(String.valueOf(amount)), secondCardInfo);
         var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo);
         var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo);
         assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
@@ -68,12 +68,12 @@ class MoneyTransferTest {
         var firstCardInfo = getFirstCardInfo();
         var secondCardInfo = getSecondCardInfo();
         var amount = dashboardPage.getCardBalance(firstCardInfo) + 1801;
-        var expectedBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo) + amount;
-        var expectedBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo) - amount;
+        var expectedBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo);
+        var expectedBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo);
         var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
-        dashboardPage = transferPage.makeTransfer(String.valueOf(amount), firstCardInfo);
-        var actualBalanceFirstCard = 9100;
-        var actualBalanceSecondCard = 10900;
+        dashboardPage = transferPage.makeTransfer(Integer.parseInt(String.valueOf(amount)), firstCardInfo);
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo);
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo);
         assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
         assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
     }
